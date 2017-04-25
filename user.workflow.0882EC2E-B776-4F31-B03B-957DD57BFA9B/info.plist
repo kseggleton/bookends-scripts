@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>eggleton.co.nz</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>4EA403CD-1FFC-44B4-B808-E8C5FDBBDDE0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EB20365E-9DE0-4A5F-AC04-E631FAF367D2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Kyle Eggleton</string>
+	<key>description</key>
+	<string>Sets PDF metadata</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Bookends - set metadata</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>46</integer>
+				<key>hotmod</key>
+				<integer>262144</integer>
+				<key>hotstring</key>
+				<string>M</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedApps</key>
+				<array>
+					<string>com.sonnysoftware.bookends</string>
+				</array>
+				<key>relatedAppsMode</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>4EA403CD-1FFC-44B4-B808-E8C5FDBBDDE0</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  -- Script to change the metadata title and authors based on selected reference in Bookends-- Will overwrite a PDF so use at your own risk-- Note - requires ExifTool to be installed in /usr/local/bin-- Note - requires a Bookends format to be created called 'path' with only the symbol 'm' in the 'field order' field-- Created by Kyle Eggleton 2017-04-22-- Get reference detailstell application "Bookends"	set theID to «event ToySRUID» "Selection"	set theAuthor to «event ToySRFLD» theID given string:"authors"	set theTitle to «event ToySRFLD» theID given string:"title"	set theDate to «event ToySRFLD» theID given string:"thedate"	set theFile to «event ToySGUID» theID given «class RRTF»:"false", string:"path"end tell-- Unencode the URL encoded string returned from Bookendsset theUnencodedPath to do shell script "encoded_string=" &amp; theFile &amp; "
+printf -v encoded_string \"%b\" \"${encoded_string//\\%/\\x}\"
+echo $encoded_string"set AppleScript's text item delimiters to {"file://"}set thePath to text item 2 of theUnencodedPath-- Set the metadata fieldsdo shell script "/usr/local/bin/exiftool -title=" &amp; quoted form of theTitle &amp; " -author=" &amp; quoted form of theAuthor &amp; " -overwrite_original " &amp; quoted form of thePath
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>EB20365E-9DE0-4A5F-AC04-E631FAF367D2</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>4EA403CD-1FFC-44B4-B808-E8C5FDBBDDE0</key>
+		<dict>
+			<key>xpos</key>
+			<integer>210</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>EB20365E-9DE0-4A5F-AC04-E631FAF367D2</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>eggleton.co.nz</string>
+</dict>
+</plist>
